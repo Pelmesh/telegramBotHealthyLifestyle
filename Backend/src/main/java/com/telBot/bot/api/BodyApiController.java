@@ -2,7 +2,9 @@ package com.telBot.bot.api;
 
 
 import com.telBot.bot.Repo.BodyRepository;
+import com.telBot.bot.Repo.UserRepository;
 import com.telBot.bot.model.Body;
+import com.telBot.bot.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,9 @@ public class BodyApiController {
     @Autowired
     private BodyRepository bodyRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping
     public List<Body> getAllBody(){
         return  bodyRepository.findAll();
@@ -37,7 +42,11 @@ public class BodyApiController {
     @PostMapping
     public Body saveBody(@RequestBody Body body){
         setAmrBmr(body);
-        return  bodyRepository.save(body);
+        User user = userRepository.findByIdChat(body.getIdChat());
+        bodyRepository.save(body);
+        user.setBody(body);
+        userRepository.save(user);
+        return  body;
     }
 
     @PutMapping
