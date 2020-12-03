@@ -18,7 +18,7 @@ public class Body {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "id_chat")
+    @Column(name = "idChat")
     private Long idChat;
 
     @Column(name = "weight")
@@ -30,9 +30,6 @@ public class Body {
     @Column(name = "age")
     private int age;
 
-    @Column(name = "gender")
-    private String gender;
-
     @Column(name = "BMR")
     private double BMR;
 
@@ -43,10 +40,14 @@ public class Body {
     private double calRate;
 
     @Column(name = "purpose")
-    private String purpose;
+    private int purpose;
 
     @Column(name = "type_diet")
     private String typeDiet;
+
+    @Column(name = "sex")
+    private String gender;
+
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -118,11 +119,11 @@ public class Body {
         this.calRate = calRate;
     }
 
-    public String getPurpose() {
+    public int getPurpose() {
         return purpose;
     }
 
-    public void setPurpose(String purpose) {
+    public void setPurpose(int purpose) {
         this.purpose = purpose;
     }
 

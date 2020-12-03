@@ -15,6 +15,8 @@ public class Dish {
     private Long id;
     private String name;
     private String type;
+    private String diet;
+    private String url;
     private double calories;
     private double proteins;
     private double fats;
@@ -22,8 +24,24 @@ public class Dish {
 
     public Dish(){}
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public String getDiet() {
+        return diet;
+    }
+
+    public void setDiet(String diet) {
+        this.diet = diet;
     }
 
     public void setId(Long id) {

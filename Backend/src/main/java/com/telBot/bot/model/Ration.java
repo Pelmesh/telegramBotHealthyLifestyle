@@ -24,7 +24,7 @@ public class Ration {
     private Date date;
 
     @Column(name = "purpose")
-    private String purpose;
+    private int purpose;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "breakfast")
@@ -60,11 +60,11 @@ public class Ration {
         this.date = date;
     }
 
-    public String getPurpose() {
+    public int getPurpose() {
         return purpose;
     }
 
-    public void setPurpose(String purpose) {
+    public void setPurpose(int purpose) {
         this.purpose = purpose;
     }
 
