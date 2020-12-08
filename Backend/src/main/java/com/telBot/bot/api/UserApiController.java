@@ -37,6 +37,10 @@ public class UserApiController {
 
     @PostMapping
     public User saveUser(@RequestBody User user){
+        User userCheck = userRepository.findByIdChat(user.getIdChat());
+        if (userCheck !=null){
+            return null;
+        }
         user.setPassword(getPas());
         user.setRoles(Collections.singleton(Role.USER));
         user.setUsername(user.getIdChat().toString());

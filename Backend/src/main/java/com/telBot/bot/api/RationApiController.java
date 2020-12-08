@@ -36,29 +36,52 @@ public class RationApiController {
         User user = userRepository.findByIdChat(idChat);
         List<Long[]> list = new ArrayList<>();
         if (user.getBody().getPurpose() == 0) {
-            list = dishRepository.findRation(
-                    user.getBody().getCalRate() - 100,
-                    user.getBody().getCalRate() - 300,
-                    user.getBody().getTypeDiet());
+            if (!user.getBody().getTypeDiet().equals("normal")) {
+                list = dishRepository.findRation(
+                        user.getBody().getCalRate() - 100,
+                        user.getBody().getCalRate() - 300,
+                        user.getBody().getTypeDiet());
+            } else {
+                list = dishRepository.findRationNormal(
+                        user.getBody().getCalRate() - 100,
+                        user.getBody().getCalRate() - 300);
+            }
         } else if (user.getBody().getPurpose() == 1) {
-            list = dishRepository.findRation(
-                    user.getBody().getCalRate() + 300,
-                    user.getBody().getCalRate() + 100,
-                    user.getBody().getTypeDiet());
+            if (!user.getBody().getTypeDiet().equals("normal")) {
+                list = dishRepository.findRation(
+                        user.getBody().getCalRate() + 300,
+                        user.getBody().getCalRate() + 100,
+                        user.getBody().getTypeDiet());
+            } else {
+                list = dishRepository.findRationNormal(
+                        user.getBody().getCalRate() + 300,
+                        user.getBody().getCalRate() + 100);
+            }
         } else if (user.getBody().getPurpose() == 2) {
-            list = dishRepository.findRation(
-                    user.getBody().getCalRate() + 150,
-                    user.getBody().getCalRate() - 150,
-                    user.getBody().getTypeDiet());
+            if (!user.getBody().getTypeDiet().equals("normal")) {
+
+                list = dishRepository.findRation(
+                        user.getBody().getCalRate() + 150,
+                        user.getBody().getCalRate() - 150,
+                        user.getBody().getTypeDiet());
+            } else {
+                list = dishRepository.findRationNormal(
+                        user.getBody().getCalRate() + 150,
+                        user.getBody().getCalRate() - 150);
+            }
         }
-         List<Long> list2 = list.stream()
+        List<Long> list2 = list.stream()
                 .flatMap(Arrays::stream)
                 .collect(Collectors.toList());
         ration.setBreakfast(dishRepository.findById(list2.get(0)).get());
         ration.setDinner(dishRepository.findById(list2.get(1)).get());
         ration.setLunch(dishRepository.findById(list2.get(2)).get());
         java.sql.Date sqlDate = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-        ration.setDate(sqlDate);
+        Calendar c = Calendar.getInstance();
+        c.setTime(sqlDate);
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        java.sql.Date sqlDate2 = new java.sql.Date(c.getTimeInMillis());
+        ration.setDate(sqlDate2);
         ration.setUser(user);
         ration.setPurpose(user.getBody().getPurpose());
         rationRepository.save(ration);

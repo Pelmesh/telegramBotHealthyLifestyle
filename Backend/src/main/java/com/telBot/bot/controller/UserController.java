@@ -40,7 +40,9 @@ public class UserController {
     public String updateBody(@AuthenticationPrincipal User user, Body body,Model model){
         Body bodyU = bodyRepository.findByIdChat(user.getIdChat());
         bodyU.setWeight(body.getWeight());
+        bodyU.setAMR(body.getAMR());
         bodyU.setAge(body.getAge());
+        bodyU.setTypeDiet(body.getTypeDiet());
         bodyU.setPurpose(body.getPurpose());
         bodyU.setHeight(body.getHeight());
         model.addAttribute("user",user);
