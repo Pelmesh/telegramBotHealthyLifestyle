@@ -9,7 +9,7 @@ import schedule
 from validate_email import validate_email
 import requests
 
-bot = telebot.TeleBot('1250487291:AAEd2xynjPPTYXRoaZd0SBlY540wqdt1y4w')
+bot = telebot.TeleBot('token')
 
 user_dict = {}
 dishes_dict = {}
