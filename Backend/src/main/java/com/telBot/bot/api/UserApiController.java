@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -31,14 +32,19 @@ public class UserApiController {
     }
 
     @GetMapping("{idChat}")
-    public User getByIdChat(@PathVariable Long idChat){
-        return  userRepository.findByIdChat(idChat);
+    public User getByIdChat(@PathVariable Long idChat, HttpServletResponse res){
+        User user = userRepository.findByIdChat(idChat);
+        if (user == null){
+            res.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return null;
+        }
+        return  user;
     }
 
     @PostMapping
     public User saveUser(@RequestBody User user){
         User userCheck = userRepository.findByIdChat(user.getIdChat());
-        if (userCheck !=null){
+        if (userCheck != null){
             return null;
         }
         user.setPassword(getPas());
